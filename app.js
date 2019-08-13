@@ -619,7 +619,7 @@ app.post('/mail',function(req,res){
 //      clientId:'354116386100-bgfhvd9n4fss1fck3vdo0gs7ot9aifus.apps.googleusercontent.com',
        type: "login",
         user: 'khyati15khanduja@gmail.com',
-      pass:'Khyatikk1511'
+      pass:'' //password
 //        clientSecret: 'XXWFS_-G8GIZd_CJMBIcrdci',
 //        refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
 //        accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x'
