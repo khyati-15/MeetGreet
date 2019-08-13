@@ -1,0 +1,301 @@
+<html>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <head>
+       <style>
+#head
+{
+    font-weight: bold;
+    background-color: darkblue;
+    color: white;
+    box-shadow: 0 0 10px;
+    width:100%;
+     justify-content: center;
+    align-items: center;
+    position:sticky;
+}
+           .main
+           {
+               width:50%;
+               border-color: black;
+                height: 90vh;
+               box-shadow: 0 0 15px;
+               justify-content: center;
+               align-content: center;
+                   align-items: center;
+                display: flex;
+                margin-top: 15px;
+}
+           table
+           {
+               width:100%;
+           }
+        .textbox
+           {
+              margin :10px;  
+               width:40%;
+           }
+           .head
+           {
+               background-color: lightgray;
+               width:100%;
+               text-align: center;
+               height:30px;
+               font-size: 25px;
+               width:500px;
+           }
+           .content
+           {
+               background-color: white;
+               width:100%;
+               text-align: center;
+               height:30px;
+               font-size: 25px;
+               width:500px;
+           }
+           input
+           {
+               width:90%;
+           }
+           #submit
+           {
+               background-color: red;
+               color:white;
+               border-color: red;
+               width:100px;
+           }
+           #btn
+           {
+               background-color: darkblue;
+               color:white;
+               border-color: darkblue;
+               width:150px;
+               height:40px;
+           }
+           
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+                   @media only screen and (max-width: 1024px){
+    header{
+        font-size: 18px;
+    }
+    .main{
+        width: 80%;
+        align-items: flex-start;
+        box-shadow: 0px 0px 6px;
+    }
+               .head{
+        width: 100%;
+    }
+               .content{
+                        width:100%;
+               }
+    /*input{
+        font-size: 18px;
+    }*/
+    footer h5{
+        font-size: 14px;
+    }
+}
+        </style>
+        <title>MeetGreet</title>
+    </head>
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">   
+    <body onload="sendreq()">
+       <% include partials/header %>
+        <center>
+        <div class="main">
+                <div class="textbox">
+                          <h1>ADD USER</h1>
+                    <center><input type="text" placeholder="Email" id="email"></center>
+                    <br>
+                    <center><input type="text" placeholder="Name" id="name1"></center>
+                    <br>
+                      <center><input type="password" placeholder="Password" id="password"></center>
+                    <br>
+                   
+                    <center><select name="gender" id="gender">
+            <option value="Male">Male</option> 
+            <option value="Female">Female</option>
+                   </select> </center><br>
+                    <center><input type="text" placeholder="City" id="city"></center>
+                    <br>
+                    <center><input type="number" placeholder="Phone No." id="phone"></center>
+                    <br>
+                    <center><input type="date" placeholder="DOB" id="dob"></center>
+                    <br>
+                    <center><select name="role" id="role">
+            <option value="User">User</option> 
+            <option value="Admin">Admin</option> 
+            <option value="Superadmin">Superadmin</option>
+                   <option value="Community Builder">Community Builder</option>
+                   </select> 
+                    </center>
+                    <br>
+                    <button class="btn btn-success" id="submit">SUBMIT</button>
+                    <button class="btn btn-danger" id="clear">CANCEL</button>
+
+               </div>
+            </div>
+        </center>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
+    <script>
+        var a=0;
+      
+
+    var xhttp=new XMLHttpRequest();
+         var curruser=[];
+        var currentuser;
+		
+        function    sendreq(){	
+			 var currentuser=window.location.href.substring(window.location.href.lastIndexOf('/') + 1).replace("-"," ");
+			 var xhr=new XMLHttpRequest();
+            xhr.open("GET",`/getphoto/${currentuser}`);
+            xhr.send();
+            xhr.onreadystatechange=function(){
+                               if (this.readyState == 4 && this.status == 200) {
+                                   console.log((this.responseText));
+                                   var  path=this.responseText;
+                                path=   path.slice(7,path.length);
+                                   console.log(path);
+                                   if(path){
+									  								   path="../"+path;
+
+                                  document.getElementById("imagee").setAttribute("src",path);
+								if(document.getElementById("image1"))
+                                   document.getElementById("image1").setAttribute("src",path);
+                                   }   
+								   else
+									   {
+										 if(document.getElementById("image1"))
+										 document.getElementById("image1").setAttribute("src","../logo.jpg");
+										    document.getElementById("imagee").setAttribute("src","../logo.jpg");
+									   }
+                               }
+                
+            }; 
+				
+			}
+		
+        var email=document.getElementById("email");
+        var name=document.getElementById("name1");
+        var gender=document.getElementById("gender");
+        var city=document.getElementById("city");
+        var phone=document.getElementById("phone");
+        var dob=document.getElementById("dob");
+        var role=document.getElementById("role");
+        var password=document.getElementById("password");
+       
+        document.getElementById("submit").onclick=function(){
+        if(email.value=='')
+            alert("Email can't be left empty");
+        else    if(name1.value=='')
+            alert("Name can't be left empty");
+        else    if(password.value=='')
+            alert("Password can't be left empty");
+       
+        else    if(city.value=='')
+            alert("City can't be left empty");
+        else    if(phone.value=='')
+            alert("Phone can't be left empty");
+        else    if(dob.value=='')
+            alert("DOB can't be left empty");
+       
+        else
+            {
+                var newobj=new  Object();
+                newobj.email=email.value;
+                newobj.pass=password.value;
+                newobj.city=city.value;
+                newobj.dob=dob.value;
+                newobj.phone=phone.value;
+                newobj.name=name1.value;
+                newobj.gender=gender.value;
+                newobj.role=role.value;
+                newobj.status="Pending";
+                console.log(newobj);
+                var xhr=new XMLHttpRequest();
+                xhr.open("POST",'/add');
+                xhr.setRequestHeader("content-type","application/json");
+                xhr.send(JSON.stringify(newobj));
+                 xhr.onreadystatechange=function()
+            {
+                 if (this.readyState == 4 && this.status == 200) {
+                     console.log(this.responseText);
+                    if(this.responseText=="ADDED"){
+                                                alert("USER ADDED SUCCESSFULLY");
+
+                        var obj=new Object();
+                        obj.sendTo=email.value;
+                        obj.subject="Login Details";
+                        obj.matter="Greetings from MeetGreet. Your login credentials are : LoginId : "+email.value+" Password : "+password.value;
+                        var xhr1=new XMLHttpRequest();
+                        xhr1.open("POST",'/mail');
+                        xhr1.setRequestHeader("content-type","application/json");
+                        xhr1.send(JSON.stringify(obj));
+                        xhr1.onreadystatechange=function()
+                        {
+                            if (this.readyState == 4 && this.status == 200){
+                                if(this.responseText=="Mailed")
+                                    console.log("Mailed");
+                                alert("Mailed");
+                            }
+                        };
+                    }
+                     else
+                         alert("Email already registered");
+            }
+            };
+                
+            }
+        }
+		 document.getElementById("clear").onclick=function(){
+    window.location.href=`/addUser/${currentuser}`;
+}
+    </script>
+</html>

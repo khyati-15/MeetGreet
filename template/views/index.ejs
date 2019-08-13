@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>MeetGreet</title>
+  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
+   <link rel="stylesheet" href="style.css">
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ <body onload="inPage()">
+<header style="width: 100%;height:60px;text-align:left">
+      <p style="font-size: 20px;padding: 10px;font-weight: bold;">MeetGreet</p>
+</header>
+   <center>
+<div class="loginformholder row">
+        <div class="loginform">
+            <div class="myform">
+                <div class="form">
+                   <center><font-face="sans-serif"> <h1>Log Into Your Account</h1></font-face></center>
+                    <br>
+                    <center><input type="text" placeholder="Email" id="email"></center>
+                    <br>
+                    <center><input type="password" placeholder="Password" id="password"></center>
+                    <br>
+                    <center><button class="btn btn-success" id="login">Login</button>
+                    
+                    <a href="/auth/github" class="btn btn-primary">GITHUB</a></center>
+                </div>
+            </div>
+        </div>
+    </div></center>
+
+<footer style="position:fixed">
+<h5 id="copyright" align="center" style="font-size:20px;font-weight:bold;color:#7f7f84;"></h5>
+    <br>
+</footer>
+    <script>
+        function    inPage()
+        {
+            var date=new    Date();
+            var currdate=date.getFullYear();
+            document.getElementById("copyright").innerHTML="MeetGreet &copy; "+currdate;
+        }
+        var username=document.getElementById("username");
+        var pass=document.getElementById("pass");
+        var email=document.getElementById("email");
+var pass=document.getElementById("password");
+var login=document.getElementById("login");
+
+login.onclick=function()
+{
+    if(valid())
+        {
+            var users=[];
+            let xhr=new XMLHttpRequest();
+            xhr.open("POST",'/userlogin'); 
+           xhr.setRequestHeader("content-type","application/json");
+            xhr.send(JSON.stringify({"email":email.value,"password":pass.value}));
+            xhr.onreadystatechange=function()
+            {
+                 if (this.readyState == 4 && this.status == 200) {
+                     if(this.responseText=="successfully signed in")
+                         {
+                             var    xhttp=new XMLHttpRequest();
+                             xhttp.open("POST",'/findUser')
+                             xhttp.setRequestHeader("content-type","application/json");
+							 xhttp.send(JSON.stringify({"Email":email.value}));
+                             xhttp.onreadystatechange=function(){
+                                  if (this.readyState == 4 && this.status == 200){
+                                      users=JSON.parse(this.responseText);
+									  console.log(users);
+                                      if(users[0].Status==='Confirmed'){
+                                             window.location.href=`/portal/${users[0]._id}`;
+                                      }
+                                      else
+                                          window.location.href=`/edit/${users[0]._id}`;
+                                  }
+//
+                             };
+//							 console.log("Valid User");
+                         }
+                   else if(this.responseText=='INVALID Email/Password')
+                       alert("Invalid Password");
+                     else if(this.responseText='Invalid')
+                         alert("User Deactivated");
+                     else
+                         alert("User Not Registered");
+            }
+            };
+        }
+}
+function    valid()
+{
+    if(email.value==''){
+        alert("Email field cannot be empty");
+        return  false;
+    }
+    else    if(pass.value=='')
+        {
+            alert("Password field cannot be empty");
+            return  false;
+        }
+    return  true;
+}
+     </script>
+  </body>
+</html>

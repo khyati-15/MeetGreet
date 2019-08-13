@@ -1,0 +1,238 @@
+<html>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <head>
+       <style>
+#head
+{
+    font-weight: bold;
+    background-color: darkblue;
+    color: white;
+    box-shadow: 0 0 10px;
+    width:100%;
+     justify-content: center;
+    align-items: center;
+    position:sticky;
+}
+           .main
+           {
+               width:50%;
+               border-color: black;
+                height: 30vh;
+               box-shadow: 0 0 15px;
+               justify-content: center;
+               align-content: center;
+                   align-items: center;
+                display: flex;
+                margin-top: 15px;
+}
+           table
+           {
+               width:100%;
+           }
+        .textbox
+           {
+              margin :10px;  
+               width:40%;
+           }
+           .head
+           {
+               background-color: lightgray;
+               width:100%;
+               text-align: center;
+               height:30px;
+               font-size: 25px;
+               width:500px;
+           }
+           .content
+           {
+               background-color: white;
+               width:100%;
+               text-align: center;
+               height:30px;
+               font-size: 25px;
+               width:500px;
+           }
+           input
+           {
+               width:90%;
+           }
+           #submit
+           {
+               background-color: red;
+               color:white;
+               border-color: red;
+               width:100px;
+           }
+           #btn
+           {
+               background-color: darkblue;
+               color:white;
+               border-color: darkblue;
+               width:150px;
+               height:40px;
+           }
+           
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+                   @media only screen and (max-width: 1024px){
+    header{
+        font-size: 18px;
+    }
+    .main{
+        width: 80%;
+        align-items: flex-start;
+        box-shadow: 0px 0px 6px;
+		overflow:auto
+    }
+               .head{
+        width: 100%;
+    }
+               .content{
+                        width:100%;
+               }
+    /*input{
+        font-size: 18px;
+    }*/
+    footer h5{
+        font-size: 14px;
+    }
+}
+        </style>
+        <title>MeetGreet</title>
+    </head>
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">   
+    <body onload="sendreq()">
+       <% include partials/header %>
+        <center>
+        <div class="main">
+                <div class="textbox">
+                          <h3>CREATE TAG</h3>
+                    <center><input type="text" placeholder="Tag Name" id="tag"></center>
+                    <br>
+                    <button class="btn btn-success" id="submit">SUBMIT</button>
+                    <button class="btn btn-danger" id="clear">CANCEL</button>
+					
+               </div>
+               
+            </div>
+            <br>
+            <button class="btn btn-primary" id="list">TagList</button>
+        </center>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
+    <script>
+        var a=0;
+      
+
+    var xhttp=new XMLHttpRequest();
+         var curruser=[];
+        var currentuser;
+		
+        function    sendreq(){	
+			 currentuser=window.location.href.substring(window.location.href.lastIndexOf('/') + 1).replace("-"," ");
+			 var xhr=new XMLHttpRequest();
+            xhr.open("GET",`/getphoto/${currentuser}`);
+            xhr.send();
+            xhr.onreadystatechange=function(){
+                               if (this.readyState == 4 && this.status == 200) {
+                                   console.log((this.responseText));
+                                   var  path=this.responseText;
+                                path=   path.slice(7,path.length);
+                                   console.log(path);
+                                   if(path){
+									  								   path="../"+path;
+
+                                  document.getElementById("imagee").setAttribute("src",path);
+								if(document.getElementById("image1"))
+                                   document.getElementById("image1").setAttribute("src",path);
+                                   }   
+								   else
+									   {
+										 if(document.getElementById("image1"))
+										 document.getElementById("image1").setAttribute("src","../logo.jpg");
+										    document.getElementById("imagee").setAttribute("src","../logo.jpg");
+									   }
+                               }
+                
+            }; 
+				
+			}
+		
+        var tag=document.getElementById("tag");
+      
+       
+        document.getElementById("submit").onclick=function(){
+        if(tag.value=='')
+            alert("Tag Name can't be left empty");
+        else
+            {
+                var newobj=new  Object();
+                newobj.tagname=tag.value;
+				var xhttp1=new XMLHttpRequest();
+				xhttp1.open("POST",'/addtag');
+				xhttp1.setRequestHeader("content-type","application/json");
+				xhttp1.send(JSON.stringify(newobj));
+				xhttp1.onload=function(){
+					tag.value="";
+					if(this.responseText=="Added")
+						alert("Tag Added");
+					else
+						alert("Tag already exists");
+				}
+				
+                
+            }
+        }
+		 document.getElementById("clear").onclick=function(){
+    window.location.href=`/tags/${currentuser}`;
+}
+		 	 document.getElementById("list").onclick=function(){
+    window.location.href=`/listtags/${currentuser}`;
+}
+    </script>
+</html>

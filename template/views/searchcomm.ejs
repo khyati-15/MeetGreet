@@ -1,0 +1,257 @@
+<html>
+   <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=yes">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+               <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+-->
+    <head>
+		
+       <style>
+	.community-header-top {
+        background-color: rgb(72, 187, 223);
+        display: grid;
+        grid-template-columns: 4fr 1fr 3fr;
+    }
+    .col-sm-10,
+    .col-xs-7,
+    .col-sm-12,
+    .col-sm-5 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px
+    }
+    .col-sm-push-4 {
+        left: 34%
+    }
+   
+    .community-head-btn {
+        border-style: solid;
+        border-width: 3px !important;
+        border-color: white !important;
+        color: white;
+    }
+    .community-list-image {
+        padding: 10px;
+    }
+    .panel {
+        margin: 30px;
+        padding: 20px;
+    }
+    .panel-heading {
+        background-color: rgb(63, 170, 202);
+    }
+    .cummunityhead {
+        color: white;
+        margin: 10px;
+        padding: 10px;
+        font-size: 22px;
+        font-weight: bold;
+    }
+   
+    .community-list-item {
+        padding: 20px;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        border-color: #CCCCCC;
+        display: grid;
+        grid-template-columns: 1fr 11fr 1fr;
+    }
+    .community-panel-btn {
+        border-style: solid !important;
+        border-width: 1px !important;
+        border-color: white !important;
+        /* margin-left: 90%; */
+    }
+		   
+    .main {
+        margin-left: 50px;
+        margin-top: 60px;
+        margin-right: 0px;
+        transition: .5s;
+        /* display: grid; */
+        /* grid-template-rows: 1fr; */
+        /* padding: 20px; */
+        /* border-width: 2px;
+    border-style: solid;
+    border-color: rgb(216, 214, 214);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+        background-color: rgb(252, 252, 252);
+    }
+    .cpic {
+        background: rgb(255, 255, 255) !important;
+        height: 50px;
+        width: 50px;
+        border: 3px solid #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+        </style>
+        <title>MeetGreet</title>
+    </head> 
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>     
+       <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">
+    </script>
+    <body onload="sendreq()">
+	<%if(user.toUser==1){
+		%> <% include partials/tempheader %> <%
+	}
+	else{%><%include partials/headeruser %><%
+	}%>
+   
+
+        <div class="community-header-top" style="height:50px;padding-top:6px;">
+            <div class="col-sm-12 community-sub-head">
+                <a id="mycomms" class="btn community-head-btn active" href="/community/communitypanel">
+                    <i class="fa fa-users"></i>
+                </a>
+                <a id="searchcomms" class="btn community-head-btn" style="margin-left:10px" href="/community/list">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div>
+            <div class="col-sm-4 col-sm-push-4 pc" style="padding:0 50px 20px 0">
+                <input style="width:200px" id="searchbox" class="form-control searchcommunity" type="text" placeholder="Search Community...">
+            </div>
+        </div>
+        <div class="main" id="main">
+        <div class="panel panel-default allSidesSoft community-panel-main-div" id="comm-notjoined">
+
+        </div>
+		</div>
+    </body>
+    
+    <script>
+        var curruser=[];
+	  var currentuser;
+		var searchval=" ";
+        function    sendreq(){		
+			currentuser=window.location.href.substring(window.location.href.lastIndexOf('/') + 1).replace("-"," ");
+			document.getElementById("mycomms").setAttribute("href",`/commpanel/${currentuser}`);
+			document.getElementById("searchcomms").setAttribute("href",`/searchcomms/${currentuser}`);
+			
+			
+
+			 var xhr=new XMLHttpRequest();
+            xhr.open("GET",`/getphoto/${currentuser}`);
+            xhr.send();
+            xhr.onreadystatechange=function(){
+                               if (this.readyState == 4 && this.status == 200) {
+                                   console.log((this.responseText));
+                                   var  path=this.responseText;
+                                path=   path.slice(7,path.length);
+                                   console.log(path);
+                                   if(path){
+									  
+                                 								   path="../"+path;
+ document.getElementById("imagee").setAttribute("src",path);
+								if(document.getElementById("image1"))
+                                   document.getElementById("image1").setAttribute("src",path);
+                                   }
+								   else
+									   {
+										 if(document.getElementById("image1"))
+										 document.getElementById("image1").setAttribute("src","../logo.jpg");
+										    document.getElementById("imagee").setAttribute("src","../logo.jpg");
+									   }
+                               }
+            };
+							  
+		}
+	var content=document.getElementById("comm-notjoined");
+		var request = new XMLHttpRequest();
+		document.getElementById("searchbox").onkeyup=function(){
+			searchval=document.getElementById("searchbox").value;
+			console.log(searchval)
+			getData();
+		}
+		getData();
+		function getData(){
+			if(searchval==" "){
+				request.open('post', "/searchcomm");
+    			request.setRequestHeader("Content-Type", "Application/JSON");
+				request.send();
+			}
+			else{
+				console.log("ABC")
+				request.open('post', "/searchcommwithval");
+    			request.setRequestHeader("Content-Type", "Application/JSON");
+				request.send(JSON.stringify({
+					"value":searchval
+				}));
+			}		
+		request.addEventListener('load', function () {
+        if (request.status === 200) {
+			content.innerHTML=" ";
+			searchval=" ";
+            var result = JSON.parse(request.responseText);
+            for (var i in result) {
+                //console.log(result[i]);
+                var divhead = document.createElement("div");
+                divhead.setAttribute("class", "community-list-item");
+                var imagediv = document.createElement("div");
+                imagediv.setAttribute("class", "community-list-image");
+               if(result[i].final){
+					var path=result[i].final.path;
+					console.log(path);
+					path=path.slice(7,path.length);
+										console.log(path);
+
+					path="../"+path;
+                imagediv.innerHTML = "<a href='/commportal/" + result[i]._id +
+                    "'><img src='" + path + "' class='cpic'></a>";
+				}
+				else
+				 imagediv.innerHTML = "<a href='/commportal/" + result[i]._id +
+                    "'><img src='" + "../community.jpg" + "' class='cpic'></a>";			
+                divhead.appendChild(imagediv);
+                var contentdiv = document.createElement("div");
+                contentdiv.setAttribute("class", "community-list-content");
+                var code =
+                    "<div class='col-sm-10 col-xs-7' style='padding-top:25px;padding-bottom:5px;overflow:hidden'><p style='margin:0'><a class='comnametxt' href='/commportal/" +
+                    result[i]._id + "'>" + result[i].Name + "</p></div>"
+                contentdiv.innerHTML = code;
+                divhead.appendChild(contentdiv);
+                var joinbut = document.createElement("div");
+                if (result[i].Rule == "Permission") {
+                    joinbut.innerHTML =
+                        '<div><button class="btn btn-primary btn-sm pull-right" id="permissionjoinbtn" onclick="joinbutpress('+
+                        result[i]._id + ')">Ask To Join</button></div>"'
+                } else {
+                    joinbut.innerHTML =
+                        '<div><button class="btn btn-primary btn-sm pull-right" id="joinbtn" onclick="joinbutpress(' +
+                        result[i]._id + ')>Join</button></div>"'
+                }
+                divhead.appendChild(joinbut);
+                content.appendChild(divhead);
+            }
+            console.log(result);
+        }
+    });
+		}
+		
+		
+    function joinbutpress(id) {
+        var requests = new XMLHttpRequest();
+        requests.open('post', "/community/joinrequest");
+        requests.setRequestHeader("Content-Type", "Application/JSON")
+        requests.send(JSON.stringify({
+            "id": id,
+        }));
+        requests.addEventListener('load', function () {
+            if (requests.status === 200) {
+                var results = JSON.parse(requests.responseText);
+                console.log(results);
+                location.reload();
+            }
+        });
+    }
+    </script>
+
+</html>

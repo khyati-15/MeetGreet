@@ -1,0 +1,372 @@
+<html>
+    <head>
+       <style>
+           #update
+           {
+               border-color:red;
+               background-color:red;
+               color:white;
+           }
+               #cancel
+           {
+               border-color:green;
+               background-color:green;
+               color:white;
+           }
+#head
+{
+    font-weight: bold;
+    background-color: darkblue;
+    color: white;
+    box-shadow: 0 0 10px;
+    width:100%;
+    position:sticky;
+      position: -webkit-sticky; /* Safari */
+
+}
+
+           .main
+           {
+               width:80%;
+               border-color: black;
+               box-shadow: 0 0 15px;
+               justify-content: center;
+               align-content: center;
+                   align-items: center;
+    display: flex;
+margin-top: 15px;
+}
+        .textbox
+           {
+              margin :10px;  
+           }
+           .head
+           {
+               background-color: lightgray;
+               width:100%;
+               text-align: center;
+               height:30px;
+               font-size: 25px;
+           }
+           
+           {
+               background-color: white;
+               width:100%;
+               text-align: center;
+               height:30px;
+               font-size: 25px;
+           }
+           #boxes
+           {
+           }
+           #image
+           {
+               width:50px;
+               height:50px;
+               border-color:black;
+           }
+           img
+           {
+               border-color: black;
+           }
+          #btn
+           {
+               background-color: darkblue;
+               color:white;
+               border-color: darkblue;
+               height:40px;
+               width:200px;
+           }
+              #edit
+           {
+               background-color: darkblue;
+               color:white;
+               border-color: darkblue;
+               height:40px;
+               width:50px;
+           }
+           .button
+           {
+               background-color: darkblue;
+               color:white;
+               border-color: darkblue;
+               width:100px;
+           }
+           
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+/*  padding: 8px 8px 8px 32px;*/
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+/*  display: block;*/
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+/*  margin-left: 50px;*/
+}
+
+
+           @media only screen and (max-width: 1024px){
+    header{
+        font-size: 18px;
+		position:sticky;
+    }
+    .main{
+        width: 100%;
+        box-shadow: 0px 0px 0px;
+
+    }
+               .head{
+				   				   			   overflow:auto;
+
+        width: 100%;
+    }
+               .content{
+                        width:100%;
+				   
+				   			   overflow:auto;
+
+               
+               }
+    /*input{
+        font-size: 18px;
+    }*/
+    footer h5{
+        font-size: 14px;
+    }
+}
+           input{
+               width:100%;
+			   				   			   overflow:auto;
+
+           }
+                       #imageUpload
+{
+    display: none;
+}
+
+#profileImage
+{
+    cursor: pointer;
+}
+
+#profile-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+
+#image1 {
+    width: 150px;
+    height: 150px;
+    border-radius:70px;
+    
+}
+        </style>
+        
+        <title>MeetGreet</title>
+           <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  
+    </head>
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">   
+       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <body onload="sendreq()">
+          <%if (user.Role=='Superadmin' && user.toUser==0 )
+		{%> <% include partials/header %> <%
+	}
+	else if(user.toUser==1){
+		%> <% include partials/tempheader %> <%
+	}
+	else{%><%include partials/headeruser %><%
+	}%>     
+               
+
+        <center>
+        <div class="main">
+           <table id="boxes">
+                 <tr>
+           <td id="image">
+    <form action="/uploadphoto" method="POST" enctype="multipart/form-data">
+      <div class="file-field input-field">
+        <div class="btn grey">
+          <span>Image</span>
+          <input name="myImage" type="file" >
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+      <button type="submit" class="btn">Upload Photo</button>
+    </form>
+  <img src="logo.jpg" id="image1">
+           </td>           
+             
+               </tr>
+           <tr colspan="2">
+           <td > <div class="textbox">
+                <div class="head"><p>Basic Info</p></div>
+                <br>
+                <p><strong>Email : </strong></p>
+                <div class="content"><input id="email"  type="text" readonly></div><br>
+               <p><strong>Name : </strong></p>
+                <div class="content"><input id="name"  type="text"></div><br>
+ `              <p><strong>DOB : </strong></p>
+                <div class="content"><input id="dob"  type="date"></div><br>
+                 <p><strong>Role : </strong></p>
+                <div class="content"><input id="role"  type="text"></div><br>
+                 <p><strong>Gender : </strong></p>
+                <div class="content"><input id="gender"  type="text"></div><br>
+               </div></td>
+               </tr>
+               
+                <tr>
+           <td colspan="2"> <div class="textbox">
+                <div class="head"><p>Contact Info</p></div>
+                 <p><strong>Phone : </strong></p>
+                <div class="content"><input id="phone"  type="number"></div><br>
+                 <p><strong>City : </strong></p>
+                <div class="content"><input id="city"  type="text"></div><br>
+               </div></td>
+               </tr>
+            </table>
+            <br>
+            
+        </div>
+        </center>
+        <br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       <button id="cancel" >CANCEL</button>
+
+                    <button id="update">UPDATE</button>
+
+        
+    </body>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
+<script>
+
+document.getElementById("cancel").onclick=function(){
+    sendreq();
+}
+    var xhttp=new XMLHttpRequest();
+         var user;
+        var curruser=[];
+       var currentuser;
+        function    sendreq(){			currentuser=window.location.href.substring(window.location.href.lastIndexOf('/') + 1).replace("-"," ")
+			console.log(currentuser);
+			 var xhr=new XMLHttpRequest();
+            xhr.open("GET",`/getphoto/${currentuser}`);
+            xhr.send();
+            xhr.onreadystatechange=function(){
+                               if (this.readyState == 4 && this.status == 200) {
+                                   console.log((this.responseText));
+                                   var  path=this.responseText;
+                                path=   path.slice(7,path.length);
+                                   console.log(path);
+                                   if(path){
+									  								   path="../"+path;
+
+                                  document.getElementById("imagee").setAttribute("src",path);
+								if(document.getElementById("image1"))
+                                   document.getElementById("image1").setAttribute("src",path);
+                                   }
+								   else
+									   {
+										 if(document.getElementById("image1"))
+										 document.getElementById("image1").setAttribute("src","../logo.jpg");
+										    document.getElementById("imagee").setAttribute("src","../logo.jpg");
+									   }
+                               }
+                
+            };
+        xhttp.open("GET",`/findById/${currentuser}`);
+        xhttp.send();
+                   xhttp.onreadystatechange=function()
+            {
+                 if (this.readyState == 4 && this.status == 200) {
+                     curruser=JSON.parse(this.responseText);
+                     
+                        console.log(curruser);
+                     document.getElementById("name").setAttribute("value",curruser[0].Name);
+					 console.log(typeof curruser[0].DOB);
+					 if(typeof curruser[0].DOB=="string")
+						 {
+							curruser[0].DOB=curruser[0].DOB.split("-").reverse().join("-");
+
+							 
+							 console.log(curruser[0].DOB);
+						 }
+                    document.getElementById("dob").setAttribute("value",curruser[0].DOB);
+                     document.getElementById("phone").setAttribute("value",curruser[0].Phone);
+                     document.getElementById("email").setAttribute("value",curruser[0].Email);
+                     document.getElementById("city").setAttribute("value",curruser[0].City);
+                     document.getElementById("gender").setAttribute("value",curruser[0].Gender);
+                      document.getElementById("role").setAttribute("value",curruser[0].Role);
+                                 }
+            };
+            }
+            
+        
+        document.getElementById("update").onclick=function()
+        {
+            var obj=new Object();
+            obj.Email=document.getElementById("email").value;
+            obj.Phone=document.getElementById("phone").value;
+            obj.DOB=document.getElementById("dob").value;
+            obj.Gender=document.getElementById("gender").value;
+            obj.City=document.getElementById("city").value;
+            obj.Role=document.getElementById("role").value;
+            obj.Name=document.getElementById("name").value;
+            obj.Status="Confirmed";
+            xhttp.open("PUT",'/update');
+            xhttp.setRequestHeader("content-type","application/json");
+                xhttp.send(JSON.stringify(obj));
+                          xhttp.onreadystatechange=function()
+            {
+                 if (this.readyState == 4 && this.status == 200) {
+                     sendreq();
+                     
+            }
+            };
+        }
+		 document.getElementById("home").onclick=function(){
+			 console.log("A");
+			 window.location.href=`/home/${currentuser}`;
+		 }   
+    </script>
+</html>
