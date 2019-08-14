@@ -1,6 +1,12 @@
 <html>
     <head>
        <style>
+/*
+		   .container{
+			   margin-left:20%;
+			   margin-right:10%;
+		   }
+*/
            h3{
                color:gray;
            }
@@ -9,15 +15,9 @@
     height:30px;
     width:30px;
 }
-.list1,#list
-{
-    margin-left:200px;
-    width:500px;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    align-self: center;
-}
+		   #list{
+			   font-size:10px
+		   }
            .member
            {
                font-size:20px;
@@ -73,14 +73,30 @@ border-color:grey;
                
     display: flex;
 }
-        .textbox
+        
+		.textbox
            {
-               width:1000px;
-               margin-left:200px;
-               border-color:darkgray;
-            box-shadow: 0 0 5px darkgray;
-               height:200px;
+              margin :10px;  
+			           }
+           .head
+           {
+               background-color: lightgray;
+               width:100%;
+               text-align: center;
+               height:40px;
+               font-size: 25px;
            }
+           .content
+           {
+               background-color: white;
+               width:100%;
+               text-align: center;
+               height:35px;
+               font-size: 20px;
+		}
+		div{
+			height:100px;
+		}
             .outer
            {
                width:700px;
@@ -97,30 +113,8 @@ border-color:grey;
   left: 40%;
   margin-left: -3px;
   top: 0;
-    margin-top:250px;
-}
-           .head
-           {
-               background-color: lightgray;
-                text-align: center;
-               align-content: center;
-               align-items: center;
-               justify-content: center;
-               height:40px;
-               font-size: 25px;
-               width:1000px;
-           }
-           .content
-           {
-               background-color: white;
-               width:1000px;
-               text-align: center;
-               align-content: center;
-               align-items: center;
-               justify-content: center;
-               height:100px;
-               font-size: 25px;
-           }
+	margin-top:250px;
+		   }
              .about
            {
                background-color: lightgray;
@@ -315,22 +309,34 @@ border-color:grey;
 	else{%><%include partials/headeruser %><%
 	}%>
               
-                 <div class="innerhead">
-                 <a href="">  <img src="../../community.jpg"  id="commpic"></a>
-
-                
-               </div>
+     <div class="innerhead">
+       <a href="">  <img src="../../community.jpg"  id="commpic"></a>
+      </div>
 <br><br>
              <a id="insert" href=""></a>
-
-                 <hr width="100%" size="100px">
-                 <br><br>
-                <a id="owner" href="#" class="member" style="margin-top:200px">Owner(1)</a>
-                &nbsp;&nbsp;
-                <a id="mems" href="#" class="member">Members</a>   
-				<div class='list1' id="list" style="border-left;200px">
-					
-    			</div>              
+                 <hr width="1000px" size="100px">
+                 <div class="container">
+              <div class="row">
+              	<div class="col-12 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+               <div class="textbox">
+				   <div class="head"><button id="rule" class="btn btn-primary" style="height:90%;text-align:center;margin-top:1%" onclick="joinbutpress()"></button></div>
+                <div class="content"><p id="members">Members</p></div>
+				</div>
+      	</div>
+      	<div class="col-12 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+               <div class="textbox">
+                <div class="head"><p>About Community</p></div>
+                <div class="content"><p id="desc"></p></div>
+				</div>
+      	</div>
+       		<div class="col-12 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+               <div class="textbox">
+                <div class="head"><p>Managers</p></div>
+                <div class="content"><li id="list"></li></div>
+				</div>
+      	</div>
+              </div>
+		</div>        
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -394,13 +400,14 @@ border-color:grey;
 			if(this.status==200){
 				result=JSON.parse(this.responseText);
 				console.log(result[0]);
-				document.getElementById("mems").innerHTML+="("+(result[0].Members.length-1)+")";
+				document.getElementById("members").innerHTML+="("+(result[0].Members.length)+")";
 				document.getElementById("insert").innerHTML=result[0].Name;
-			}
-		}
-		}
-		document.getElementById("owner").onclick=function(){
-			var li=document.createElement("h3");
+				if(result[0].Rule=="Direct")
+				document.getElementById("rule").innerHTML="JOIN";
+				else
+				document.getElementById("rule").innerHTML="ASK TO JOIN";
+				document.getElementById("desc").innerHTML=result[0].Description;
+				var li=document.createElement("h3");
             var obj=new Object();
                  obj.Email=result[0].Owner;
                  var    xhro=new XMLHttpRequest();
@@ -413,8 +420,8 @@ border-color:grey;
                                        {
                                            var  owner1=(JSON.parse(this.responseText));
                                            var  taga=document.createElement("a");
-										   taga.innerHTML="<hr style='width:100%'>";
-                                           taga.setAttribute('href',`/viewprofile/${owner1[0]._id}/${currentuser}`);
+										   taga.setAttribute("style","font-size:15px");
+										   taga.setAttribute('href',`/viewprofile/${owner1[0]._id}/${currentuser}`);
                                            taga.setAttribute("id","own");
                                            var  img=document.createElement("img");
                                            img.setAttribute("src","../../logo.jpg");
@@ -430,7 +437,6 @@ border-color:grey;
                                            }
                                                 taga.appendChild(img);
                                           taga.innerHTML+="&nbsp;&nbsp;"+owner1[0].Name;
-										    taga.innerHTML+="<hr style='width:100%'>";
                                            li.appendChild(taga);
                                            li.innerHTML+="<br>";
 										   console.log(li.innerHTML);
@@ -438,51 +444,25 @@ border-color:grey;
                                         
                                        }
                                  };
+			}
 		}
-		document.getElementById("mems").onclick=function(){
-			 document.getElementById("list").innerHTML='';
-
-                    for(var i=0;i<result[0].Members.length;i++){
-						var li=document.createElement("h3");
-            			
-                 		var xhro=new XMLHttpRequest();
-                        xhro.open("GET",`/findById/${result[0].Members[i]}`);
-                        xhro.setRequestHeader("content-type","application/json");
-						xhro.send();
-                        xhro.onreadystatechange=function(){
-                        if(this.readyState==4    &&  this.status==200)
-                         {
-							 var  owner1=(JSON.parse(this.responseText));
-							 if(owner1[0].Email!=result[0].Owner)
-                               {
-								
-                               var  taga=document.createElement("a");
-							 	taga.innerHTML="<hr style='width:100%'>";
-                                taga.setAttribute('href',`/viewprofile/${owner1[0]._id}/${currentuser}`);
-
-                               taga.setAttribute("id","members");
-                                var  img=document.createElement("img");
-                                img.setAttribute("src","../../logo.jpg");
-                                img.setAttribute("id","image2");
-                                if(owner1[0].final){
-                                var  path=owner1[0].final.path;
-                                path=path.slice(7,path.length);
-                                if(path){
-                                    path="../../"+path
-                        			img.setAttribute("src",path);
-                                }
-                                }
-                                taga.appendChild(img);
-                                taga.innerHTML+="&nbsp;&nbsp;"+owner1[0].Name;
-							  	taga.innerHTML+="<hr style='width:100%'>";
-                                li.appendChild(taga);
-                                 li.innerHTML+="";
-                                  document.getElementById("list").appendChild(li);
-                                       }
-						 		}
-                                 };
-                    }
 		}
+
+		function joinbutpress() {
+        var requests = new XMLHttpRequest();
+        requests.open('post', "/community/joinrequest");
+        requests.setRequestHeader("Content-Type", "Application/JSON")
+        requests.send(JSON.stringify({
+            "id": url[url.length-2],
+        }));
+        requests.addEventListener('load', function () {
+            if (requests.status === 200) {
+                var results = JSON.parse(requests.responseText);
+                console.log(results);
+                window.location.href=`/searchcomm/${currentuser}`;
+            }
+        });
+    }
     </script>
    
 </html>

@@ -163,6 +163,62 @@ app.post('/findUser',function(req,res){
         })
 })
 
+app.get('/approverequest/:commid/:id',function(req,res){
+	community.findOneAndUpdate({
+		_id:req.params.commid
+	},{
+		$pull:{
+			Requested:req.params.id
+		},
+		$push:{
+			Members:req.params.id
+		}
+	},
+	 {
+      new: true,                       // return updated doc
+      runValidators: true              // validate before update
+    })
+    .then(data => {
+        console.log(data)
+		user.findOneAndUpdate({
+			_id:req.params.id
+		},{
+			$push:{
+				Joinedid:req.params.commid
+			}
+		})
+        res.redirect(`/managecommunity/${req.params.commid}/${req.session.ID}`
+		)
+      })
+      .catch(err => {
+        console.error(err)
+        res.send(error)
+      })
+	
+})
+app.get('/deleterequest/:commid/:id',function(req,res){
+	community.findOneAndUpdate({
+		_id:req.params.commid
+	},{
+		$pull:{
+			Requested:req.params.id
+		}
+	},
+	 {
+      new: true,                       // return updated doc
+      runValidators: true              // validate before update
+    })
+    .then(data => {
+        console.log(data)
+        res.redirect(`/managecommunity/${req.params.commid}/${req.session.ID}`)
+      })
+      .catch(err => {
+        console.error(err)
+        res.send(error)
+      })
+	
+})
+
 app.get('/portal/:id',function(req,res){
 	if(req.session.isLogin){
 		res.render('portal',{
@@ -191,6 +247,55 @@ app.get('/edit/:id',function(req,res){
 app.get('/memberspage/:id/:user',function(req,res){
 	if(req.session.isLogin){
 		res.render('members',{
+			user:req.session
+		})
+	}
+	else
+		res.render('index',{
+			
+		})
+})
+
+
+app.get('/managecommunity/:id/:user',function(req,res){
+	if(req.session.isLogin){
+		res.render('commprofile',{
+			user:req.session
+		})
+	}
+	else
+		res.render('index',{
+			
+		})
+})
+
+app.get('/editcommunity/:id/:user',function(req,res){
+	if(req.session.isLogin){
+		res.render('editcomm',{
+			user:req.session
+		})
+	}
+	else
+		res.render('index',{
+			
+		})
+})
+
+app.get('/viewprofile/:id/:user',function(req,res){
+	if(req.session.isLogin){
+		res.render('viewprofile',{
+			user:req.session
+		})
+	}
+	else
+		res.render('index',{
+			
+		})
+})
+
+app.get('/commportal/:id/:user',function(req,res){
+	if(req.session.isLogin){
+		res.render('commportal',{
 			user:req.session
 		})
 	}
@@ -619,7 +724,7 @@ app.post('/mail',function(req,res){
 //      clientId:'354116386100-bgfhvd9n4fss1fck3vdo0gs7ot9aifus.apps.googleusercontent.com',
        type: "login",
         user: 'khyati15khanduja@gmail.com',
-      pass:'' //password
+      pass:'Khyatikk1511'
 //        clientSecret: 'XXWFS_-G8GIZd_CJMBIcrdci',
 //        refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
 //        accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x'
@@ -1302,6 +1407,65 @@ app.post('/AddCommunity', upload.single('community-'), function (req, res) {
       
 });
 
+app.post('/EditCommunity/:id', upload.single('community-'), function (req, res) {
+  console.log(req.body);
+  console.log(req.file);
+
+      var today = new Date();
+	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	date=date.toString();
+	
+        var finalImg;
+        if (req.file) {
+            finalImg = {
+      path:req.file.path,
+      contentType: req.file.mimetype,
+   }
+        community.findOneAndUpdate({
+			_id:req.params.id
+		},{
+			final:finalImg,
+			Name:req.body.communityName,
+			Description:req.body.description,
+		}
+		,{
+			safe:true,
+			upsert:true
+		},
+		   function(err, doc) {
+        if(err){
+        console.log(err);
+            res.send(err)
+        }else{
+        //do stuff
+            res.redirect(`/commpanel/${req.session.ID}`);
+        }
+    })
+		
+		} else {
+       	 community.findOneAndUpdate({
+			_id:req.params.id
+		},{
+			Name:req.body.communityName,
+			Description:req.body.description,
+		}
+		,{
+			safe:true,
+			upsert:true
+		},
+		   function(err, doc) {
+        if(err){
+        console.log(err);
+            res.send(err)
+        }else{
+        //do stuff
+            res.redirect(`/commpanel/${req.session.ID}`);
+        }
+    })
+        }
+       
+	
+});
 
 app.post('/comms/requested', function (req, res) {
   community.find({
@@ -1327,6 +1491,7 @@ app.post('/comms/requested', function (req, res) {
       res.send(err);
     })
 });
+
 passport.serializeUser(function(user, done) {
   done(null, user);
 });

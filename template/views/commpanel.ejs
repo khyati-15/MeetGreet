@@ -189,6 +189,7 @@
 				if(request.status==200){
 					var result=JSON.parse(this.responseText);
 					for(var i=0;i<result.length;i++){
+						if(result[i].Status=="Active"){
 						var divhead = document.createElement("div");
                 divhead.setAttribute("class", "community-list-item");
                 var imagediv = document.createElement("div");
@@ -214,7 +215,7 @@
                     result[i]._id + "'>" + result[i].Name;
 						console.log(result[i].Rule);
 						if(result[i].Rule=="Permission"){
-							code+="&nbsp;<a class='comnametxt' href='/requestpage/"+result[i]._id+"'> Requests("+result[i].Requested.length+")";
+							code+="&nbsp;<a class='comnametxt' href='/managecommunity/"+result[i]._id+"/"+currentuser+"'> Requests("+result[i].Requested.length+")";
 						}
 						code+="&nbsp;<a class='commemtxt' href='/memberspage/"+result[i]._id+"/"+currentuser+"'> Members("+result[i].Members.length+")</p>";
 						"</div>";
@@ -223,13 +224,14 @@
 						var settingsdiv = document.createElement("div");
                 settingsdiv.setAttribute("class", "col-sm-1 col-xs-2");
                 settingsdiv.setAttribute("style", "padding:0");
-                settingsdiv.innerHTML = "<a class='community-short-btn' href='/managecomm/" +
-                    result[i]._id +
+                settingsdiv.innerHTML = "<a class='community-short-btn' href='/managecommunity/" +
+                    result[i]._id +"/"+currentuser+
                     "' style='float:rignt'><label class='label label-success' style='margin-top:25px;cursor:pointer !important;''><i class='fa fa-cogs'></i></label></a>"
                 divhead.appendChild(settingsdiv);
 						                content.appendChild(divhead);
 
 					}
+				}
 					iampartof();
 				}
 			}
@@ -246,33 +248,36 @@
 					console.log(JSON.parse(this.responseText));
 					var result=JSON.parse(this.responseText);
 					for(var i=0;i<result.length;i++){
-						var divhead = document.createElement("div");
-                divhead.setAttribute("class", "community-list-item");
-                var imagediv = document.createElement("div");
-                imagediv.setAttribute("class", "community-list-image");
-				if(result[i].final){
-					var path=result[i].final.path;
-					path=path.slice(7,path.length);
-					console.log(path);
-					path="../"+path;
-                imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
-                    "'><img src='" + path + "' class='cpic'></a>";
-				}
-				else
-				 imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
-                    "'><img src='" + "../community.jpg" + "' class='cpic'></a>";			
-                divhead.appendChild(imagediv);
-				 var contentdiv = document.createElement("div");
-                contentdiv.setAttribute("class", "community-list-content");
-                var code =
-                    "<div class='col-sm-10 col-xs-7' style='padding-top:25px;padding-bottom:5px;overflow:hidden'><p style='margin:0'><a class='comnametxt' href='/commdiscussion/" +
-                    result[i]._id + "'>" + result[i].Name;						
-						code+="&nbsp;<a class='commemtxt' href='/memberspage/"+result[i]._id+"/"+currentuser+"'> Members("+result[i].Members.length+")</p>";
-						"</div>";
-                contentdiv.innerHTML = code;
-                divhead.appendChild(contentdiv);
-						
-						                content.appendChild(divhead);
+						if(result[i].Status=="Active")
+								{
+									var divhead = document.createElement("div");
+						divhead.setAttribute("class", "community-list-item");
+						var imagediv = document.createElement("div");
+						imagediv.setAttribute("class", "community-list-image");
+						if(result[i].final){
+							var path=result[i].final.path;
+							path=path.slice(7,path.length);
+							console.log(path);
+							path="../"+path;
+						imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
+							"'><img src='" + path + "' class='cpic'></a>";
+						}
+						else
+						 imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
+							"'><img src='" + "../community.jpg" + "' class='cpic'></a>";			
+						divhead.appendChild(imagediv);
+						 var contentdiv = document.createElement("div");
+						contentdiv.setAttribute("class", "community-list-content");
+						var code =
+							"<div class='col-sm-10 col-xs-7' style='padding-top:25px;padding-bottom:5px;overflow:hidden'><p style='margin:0'><a class='comnametxt' href='/commdiscussion/" +
+							result[i]._id + "'>" + result[i].Name;						
+								code+="&nbsp;<a class='commemtxt' href='/memberspage/"+result[i]._id+"/"+currentuser+"'> Members("+result[i].Members.length+")</p>";
+								"</div>";
+						contentdiv.innerHTML = code;
+						divhead.appendChild(contentdiv);
+
+												content.appendChild(divhead);
+								}
 
 				}
 					requestedfor();
@@ -290,6 +295,7 @@
 					console.log(JSON.parse(this.responseText));
 					var result=JSON.parse(this.responseText);
 					for(var i=0;i<result.length;i++){
+						if(result[i].Status=="Active"){
 						var divhead = document.createElement("div");
                 divhead.setAttribute("class", "community-list-item");
                 var imagediv = document.createElement("div");
@@ -316,6 +322,7 @@
                 divhead.appendChild(contentdiv);
 						
 						                content.appendChild(divhead);
+						}
 
 				}
 		}
