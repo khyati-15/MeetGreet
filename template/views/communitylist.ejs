@@ -453,7 +453,6 @@ align-content:center;
               "processing" : true,
               "serverSide" : true,
 			  "searching":true,
-			  order: [[0, "asc"]],
 			  "search":{
 				  "value":searchvalue1,
 				  "regex":true
@@ -498,11 +497,17 @@ align-content:center;
             },
             {
               "data" : "Date",
+				"orderable":'false',
+				"sorting":"false"
             },
             {
-          "data":null
+          "data":null,
+				"orderable":'false',
+				"sorting":"false"
             },{
-				"data":"final.path"
+				"data":"final.path",
+				"orderable":'false',
+				"sorting":"false"
 			}
           ],
 

@@ -9,26 +9,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=yes">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
        <style>
+		   
 	.community-header-top {
         background-color: rgb(72, 187, 223);
         display: grid;
         grid-template-columns: 4fr 1fr 3fr;
     }
-/*
-    .col-sm-10,
-    .col-xs-7,
-    .col-sm-12,
-    .col-sm-5 {
-        position: relative;
-        min-height: 1px;
-        padding-right: 15px;
-        padding-left: 15px
-    }
-    .col-sm-push-4 {
-        left: 34%
-    }
-   
-*/
     .community-head-btn {
         border-style: solid;
         border-width: 3px !important;
@@ -109,7 +95,7 @@
 	}%>
    
 
-        <div class="community-header-top row" style="height:50px;padding-top:6px;">
+        <div class="community-header-top row" style="height:50px;padding-top:6px;margin-right:0px">
             <div class="col-5 col-xl-6 col-lg-6 col-md-5 col-sm-5 col-xs-5 community-sub-head">
                 <a id="mycomms" class="btn community-head-btn active" href="/community/communitypanel">
                     <i class="fa fa-users"></i>
@@ -132,7 +118,21 @@
     <script>
         var curruser=[];
 	  var currentuser;
-		var searchval=" ";
+		var searchval="";
+		var start=0;
+		var end=4;
+		var nearToBottom = 200;
+
+		$(window).scroll(function(e){
+					console.log(($(document).height()-window.innerHeight));
+		console.log($(window).scrollTop());
+if($(window).scrollTop()==($(document).height()-window.innerHeight)){
+				start+=4;
+				end+=4;
+				getData();
+			}
+		})
+		
         function    sendreq(){		
 			currentuser=window.location.href.substring(window.location.href.lastIndexOf('/') + 1).replace("-"," ");
 			document.getElementById("mycomms").setAttribute("href",`/commpanel/${currentuser}`);
@@ -151,7 +151,7 @@
                                    console.log(path);
                                    if(path){
 									  
-                                 								   path="../"+path;
+                                 								   path="../../"+path;
  document.getElementById("imagee").setAttribute("src",path);
 								if(document.getElementById("image1"))
                                    document.getElementById("image1").setAttribute("src",path);
@@ -159,40 +159,43 @@
 								   else
 									   {
 										 if(document.getElementById("image1"))
-										 document.getElementById("image1").setAttribute("src","../logo.jpg");
-										    document.getElementById("imagee").setAttribute("src","../logo.jpg");
+										 document.getElementById("image1").setAttribute("src","../../logo.jpg");
+										    document.getElementById("imagee").setAttribute("src","../../logo.jpg");
 									   }
                                }
             };
 							  
 		}
+		
 	var content=document.getElementById("comm-notjoined");
 		var request = new XMLHttpRequest();
 		document.getElementById("searchbox").onkeyup=function(){
+			start=0;
+			end=4;
+			content.innerHTML="";
 			searchval=document.getElementById("searchbox").value;
-			console.log(searchval)
 			getData();
 		}
 		getData();
+		var prevval=" ";
+		var inreq=0;
 		function getData(){
-			if(searchval==" "){
-				request.open('post', "/searchcomm");
-    			request.setRequestHeader("Content-Type", "Application/JSON");
-				request.send();
-			}
-			else{
-				console.log("ABC")
+			console.log("A");
+			 
 				request.open('post', "/searchcommwithval");
     			request.setRequestHeader("Content-Type", "Application/JSON");
 				request.send(JSON.stringify({
-					"value":searchval
+					"value":document.getElementById("searchbox").value,
+					"start":start,
+					"end":end
 				}));
-			}		
-		request.addEventListener('load', function () {
-        if (request.status === 200) {
-			content.innerHTML=" ";
-			searchval=" ";
+				
+		request.onload= function () {
+        if (this.status === 200) {
+			prevval=document.getElementById("searchbox").value;
+
             var result = JSON.parse(request.responseText);
+			console.log(result.length);
             for (var i in result) {
                 //console.log(result[i]);
 				if(result[i].Status=="Active"){
@@ -225,19 +228,18 @@
                 if (result[i].Rule == "Permission") {
                     joinbut.innerHTML =
                         '<div><button class="btn btn-primary btn-sm pull-right" id="permissionjoinbtn" onclick=joinbutpress("'+
-                        result[i]._id + '")>Ask To Join</button></div>"'
+                        result[i]._id + '")>Ask To Join</button></div>'
                 } else {
                     joinbut.innerHTML =
                         '<div><button class="btn btn-primary btn-sm pull-right" id="joinbtn" onclick=joinbutpress("' +
-                        result[i]._id + '")>Join</button></div>"'
+                        result[i]._id + '")>Join</button></div>'
                 }
                 divhead.appendChild(joinbut);
                 content.appendChild(divhead);
 				}
             }
-            console.log(result);
         }
-    });
+    };
 		}
 		
 		

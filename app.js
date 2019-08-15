@@ -724,7 +724,7 @@ app.post('/mail',function(req,res){
 //      clientId:'354116386100-bgfhvd9n4fss1fck3vdo0gs7ot9aifus.apps.googleusercontent.com',
        type: "login",
         user: 'khyati15khanduja@gmail.com',
-      pass:'Khyatikk1511'
+      pass:''
 //        clientSecret: 'XXWFS_-G8GIZd_CJMBIcrdci',
 //        refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
 //        accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x'
@@ -752,11 +752,30 @@ app.post('/getuserlist',function(req,res){
 		res.render('index',{})
 	}
 	else{
+		var dir=req.body.order[0].dir;
+		var dirr;
+		if(dir=="asc")
+			dirr=1;
+		else
+			dirr=-1;
+		var col;
+		if(req.body.order[0].column==0)
+			col="Email";
+		else if(req.body.order[0].column==1)
+			col="Phone";
+		else if(req.body.order[0].column==2)
+			col="City";
+		else if(req.body.order[0].column==3)
+			col="Status";
+		else
+			col="Role";
 		var count;
 		count = user.countDocuments({}, function (error, c) {
       count = c;
     });
 		console.log(req.body)
+		console.log(col)
+		console.log(dirr)
 		var findobj={};
 		var querystatus=req.body.querystatus;
 		var queryrole=req.body.queryrole;
@@ -764,7 +783,7 @@ app.post('/getuserlist',function(req,res){
 		if(querystatus==0 && queryrole==0){
 			user.find({}, {
           "_id": 0
-        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start))
+        }).sort({[col]:dirr}).limit(parseInt(req.body.length)).skip(parseInt(req.body.start))
         .then(data => {
           //console.log(data);
 				
@@ -794,9 +813,9 @@ app.post('/getuserlist',function(req,res){
 					.then(data2 => {
 					console.log(data2)
 					
-					user.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length))
+					user.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length)).sort({[col] : dirr})
 						.then(data1=>{
-						console.log(data1)
+						console.log(data1);
 						res.send({"recordsTotal": count,
             "recordsFiltered": getcount,
             data:data1
@@ -832,7 +851,7 @@ app.post('/getuserlist',function(req,res){
           "Role": queryrole,
         }, {
           "_id": 0
-        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start))
+        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start)).sort({[col]:dirr})
         .then(data => {
           //console.log(data);
           if(searchval!=''){
@@ -862,7 +881,11 @@ app.post('/getuserlist',function(req,res){
 					.then(data2 => {
 					console.log(data2)
 					
-					user.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length))
+					user.find(findobj,{
+						$sort:{
+							col:dirr
+						}
+					}).skip(parseInt(req.body.start)).limit(parseInt(req.body.length)).sort({[col] : dirr})
 						.then(data1=>{
 						console.log(data1)
 						res.send({"recordsTotal": count,
@@ -899,7 +922,7 @@ app.post('/getuserlist',function(req,res){
           "Status": querystatus,
         }, {
           "_id": 0
-        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start))
+        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start)).sort({[col]:dirr})
         .then(data => {
           //console.log(data);
           if(searchval!=''){
@@ -929,7 +952,7 @@ app.post('/getuserlist',function(req,res){
 					.then(data2 => {
 					console.log(data2)
 					
-					user.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length))
+					user.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length)).sort({[col] : dirr})
 						.then(data1=>{
 						console.log(data1)
 						res.send({"recordsTotal": count,
@@ -963,7 +986,7 @@ app.post('/getuserlist',function(req,res){
           "Role": queryrole,
         }, {
           "_id": 0
-        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start))
+        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start)).sort({[col]:dirr})
         .then(data => {
           //console.log(data);
          if(searchval!=''){
@@ -994,7 +1017,7 @@ app.post('/getuserlist',function(req,res){
 					.then(data2 => {
 					console.log(data2)
 					
-					user.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length))
+					user.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length)).sort({[col] : dirr})
 						.then(data1=>{
 						console.log(data1)
 						res.send({"recordsTotal": count,
@@ -1033,6 +1056,17 @@ app.post('/gettagslist',function(req,res){
 		res.render('index',{})
 	}
 	else{
+		var dir=req.body.order[0].dir;
+		var dirr;
+		if(dir=="asc")
+			dirr=1;
+		else
+			dirr=-1;
+		var col;
+		if(req.body.order[0].column==0)
+			col="Name";
+		else
+			col="By";
 		var count;
 		count = tag.countDocuments({}, function (error, c) {
       count = c;
@@ -1042,7 +1076,7 @@ app.post('/gettagslist',function(req,res){
 				var searchval=req.body.search.value;
 
 			tag.find({}, {
-        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start))
+        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start)).sort({[col]:dirr})
         .then(data => {
           //console.log(data);
 				
@@ -1066,7 +1100,7 @@ app.post('/gettagslist',function(req,res){
 					.then(data2 => {
 					console.log(data2)
 					
-					tag.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length))
+					tag.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length)).sort({[col]:dirr})
 						.then(data1=>{
 						console.log(data1)
 						res.send({"recordsTotal": count,
@@ -1106,6 +1140,21 @@ app.post('/getcommslist',function(req,res){
 		res.render('index',{})
 	}
 	else{
+		var dir=req.body.order[0].dir;
+		var dirr;
+		if(dir=="asc")
+			dirr=1;
+		else
+			dirr=-1;
+		var col;
+		if(req.body.order[0].column==0)
+			col="Name";
+		else if(req.body.order[0].column==1)
+			col="Rule";
+		else if(req.body.order[0].column==2)
+			col="Location";
+		else
+			col="Owner";
 		var count;
 		count = community.countDocuments({}, function (error, c) {
       count = c;
@@ -1117,7 +1166,7 @@ app.post('/getcommslist',function(req,res){
 
 		if(querystatus==0){
 			community.find({}, {
-        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start))
+        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start)).sort({[col]:dirr})
         .then(data => {
           //console.log(data);
 				
@@ -1147,7 +1196,7 @@ app.post('/getcommslist',function(req,res){
 					.then(data2 => {
 					console.log(data2)
 					
-					community.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length))
+					community.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length)).sort({[col]:dirr})
 						.then(data1=>{
 						console.log(data1)
 						res.send({"recordsTotal": count,
@@ -1186,7 +1235,7 @@ app.post('/getcommslist',function(req,res){
           "Rule": querystatus,
         }, {
           "_id": 0
-        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start))
+        }).limit(parseInt(req.body.length)).skip(parseInt(req.body.start)).sort({[col]:dirr})
         .then(data => {
           //console.log(data);
           if(searchval!=''){
@@ -1216,7 +1265,7 @@ app.post('/getcommslist',function(req,res){
 					.then(data2 => {
 					console.log(data2)
 					
-					community.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length))
+					community.find(findobj).skip(parseInt(req.body.start)).limit(parseInt(req.body.length)).sort({[col]:dirr})
 						.then(data1=>{
 						console.log(data1)
 						res.send({"recordsTotal": count,
@@ -1360,7 +1409,7 @@ app.post('/AddCommunity', upload.single('community-'), function (req, res) {
    }
         } else {
             finalImg = {
-      path:"./public/uploads/community.jpg",
+      path:"public/uploads/community.jpg",
    }
         }
         var today = new Date();
@@ -1559,8 +1608,8 @@ console.log(req.session.passport);
         $ne: req.session.ID
       },
     }).sort({
-      "name": 1
-    })
+      "Name": 1
+    }).skip(req.body.start).limit(req.body.end)
     .then(data => {
       res.send(data);
     })
@@ -1570,6 +1619,7 @@ console.log(req.session.passport);
     })
 });
  app.post('/searchcommwithval', function (req, res) {
+	 
   community.find({
       "Owner": {
         $ne: req.session.Email
@@ -1585,8 +1635,8 @@ console.log(req.session.passport);
 		  $options:'i'
 	  }
     }).sort({
-      "name": 1
-    })
+      "Name": 1
+    }).skip(req.body.start).limit(req.body.end)
     .then(data => {
       res.send(data);
     })

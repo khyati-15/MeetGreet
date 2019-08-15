@@ -16,7 +16,10 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
      <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">
+		
     </script>
        <style>
  .editmodal-div {
@@ -25,6 +28,13 @@
         grid-template-columns: 1fr 4fr;
         font-size: 14px;
     }
+		      .emailbut {
+        background-color: black;
+    }
+    .editbut {
+        background-color: blue;
+    }
+
     .editmodal-label {
         text-align: right;
         margin: 10px;
@@ -62,6 +72,15 @@
     }
     .activatebut {
         background-color: rgb(81, 255, 0);
+    }
+		   	   
+    .actionbut {
+        padding: 5px 8px 5px 8px;
+        cursor: pointer;
+        margin: 5px;
+        font-size: 14px;
+        color: white;
+        display: inline-block;
     }
     .emailmodal-div {
         height: 30px;
@@ -571,17 +590,15 @@ align-content:center;
 			console.log(setstatus,setrole,searchvalue1);
 			$(document).ready(function() {
           table	=  $('#example').DataTable({
-			  "searching":true,
-			 
               "processing" : true,
               "serverSide" : true,
-			  "searching":true,
-			  order: [[0, "asc"]],
 			  "search":{
 				  "value":searchvalue1,
 				  "regex":true
 			  },
 			   "destroy":true,
+			  			  "ordering":true,
+
 			  "initComplete": function(settings, json) {
             $('#example_filter input').unbind();
             $('#example_filter input').bind('keyup', function(e) {
@@ -605,40 +622,48 @@ align-content:center;
             "columns" : [
             {
               "data" : "Email",
-				"searchable":'true'
+				"searchable":'true',
+		
             },
             {
               "data" : "Phone",
-              "orderable" : 'false' //sort
+				"sorting":'false'
+								
             },
             {
               "data" : "City",
-				"searchable":'true'
+				"searchable":'true',
+								
             },
             {
               "data" : "Status",
-				"searchable":'true'
+				"searchable":'true',
+						"sorting":'false'
+
             },
+				
             {
               "data" : "Role",
-				"searchable":'true'
+				"searchable":'true',
+								"sorting":'false'
+
             },
             {
-          "data":null
+          "data":null,
+				"orderable":false
             }
           ],
                       columnDefs: [
+						  
              {
                  targets:-1, // Start with the last
                  orderable : 'false',
                  render: function ( data, type, row, meta ) {
                          
-                                   
+                                   console.log(data)
 							 var r = row.Role;
-                    if (r === "Superadmin") {
-                        return '<center><span class="actionbut emailbut" data-toggle="modal" data-target="#email-user-modal" id="emailbut"><i class="fas fa-envelope"></i></span></center>';
-                    } 
-							else {
+                    
+							if (r != "Superadmin") {
                         var visible = row.Flag;
                         if (!visible) {
                             return '<center><span class="actionbut emailbut" data-toggle="modal" data-target="#email-user-modal" id="emailbut"><i class="fas fa-envelope"></i></span><span class="actionbut editbut" data-toggle="modal" data-target="#edit-userdetails-modal" id="editbut"><i class="fas fa-edit"></i></span><span class="actionbut deactivatebut" data-toggle="modal" data-target="#deactivate-user-modal" id="deactivatebut"><i class="fa fa-times-circle"></i></span></center>';
@@ -646,6 +671,9 @@ align-content:center;
                             return '<center><span class="actionbut emailbut" data-toggle="modal" data-target="#email-user-modal" id="emailbut"><i class="fas fa-envelope"></i></span><span class="actionbut editbut" data-toggle="modal" data-target="#edit-userdetails-modal" id="editbut"><i class="fas fa-edit"></i></span><span class="actionbut activatebut" data-toggle="modal" data-target="#activate-user-modal" id="activatebut"><i class="fa fa-check-circle"></i></span></center>'
                         }
                     }
+					 else {
+                        return '<center><span class="actionbut emailbut" data-toggle="modal" data-target="#email-user-modal" id="emailbut"><i class="fas fa-envelope"></i></span></center>';
+                    } 
                         
 //                     return data;
                  }
