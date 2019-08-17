@@ -220,7 +220,13 @@
                  if (this.readyState == 4 && this.status == 200) {
 					 console.log(this.responseText);
                      curruser=JSON.parse(this.responseText);
-                     
+                     if(typeof curruser[0].DOB=="string")
+						 {
+							curruser[0].DOB=curruser[0].DOB.split("-").reverse().join("-");
+
+							 
+							 console.log(curruser[0].DOB);
+						 }
                       document.getElementById("name").innerHTML=curruser[0].Name;
                     document.getElementById("dob").innerHTML=curruser[0].DOB;
                      document.getElementById("phone").innerHTML=curruser[0].Phone;

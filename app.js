@@ -140,6 +140,7 @@ app.post('/userlogin',function(req,res){
 			req.session.toUser=0;
 			req.session.Email=data[0].Email;
 			req.session.Role=data[0].Role;
+			req.session.Status=data[0].Status;
 			console.log(data[0]._id);
 			
 			res.send("successfully signed in")
@@ -226,9 +227,7 @@ app.get('/portal/:id',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 
 
@@ -239,9 +238,7 @@ app.get('/edit/:id',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 
 app.get('/memberspage/:id/:user',function(req,res){
@@ -251,9 +248,7 @@ app.get('/memberspage/:id/:user',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 
 
@@ -264,9 +259,7 @@ app.get('/managecommunity/:id/:user',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 
 app.get('/editcommunity/:id/:user',function(req,res){
@@ -276,9 +269,7 @@ app.get('/editcommunity/:id/:user',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 
 app.get('/viewprofile/:id/:user',function(req,res){
@@ -288,9 +279,7 @@ app.get('/viewprofile/:id/:user',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 
 app.get('/commportal/:id/:user',function(req,res){
@@ -300,9 +289,7 @@ app.get('/commportal/:id/:user',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 
 app.get('/currentSession',function(req,res){
@@ -354,9 +341,7 @@ app.get('/home/:id',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 app.get('/changepassword/:id',function(req,res){
 	if(req.session.isLogin){
@@ -365,9 +350,7 @@ app.get('/changepassword/:id',function(req,res){
 		})
 	}
 	else
-		res.render('index',{
-			
-		})
+		res.redirect('/login')
 })
 // SET STORAGE
 var storage = multer.diskStorage({
@@ -590,9 +573,7 @@ app.get('/addUser/:id',(req,res)=>{
     })
         }
     else
-        {
-            res.render('index');
-        }
+        res.redirect('/login')
 })
 app.get('/switchtoUser',(req,res)=>{
     if(req.session.isLogin)
@@ -601,9 +582,7 @@ app.get('/switchtoUser',(req,res)=>{
     res.redirect(`/home/${req.session.ID}`)
         }
     else
-        {
-            res.render('index');
-        }
+        res.redirect('/login')
 })
 app.get('/switchtoAdmin',(req,res)=>{
     if(req.session.isLogin)
@@ -612,9 +591,7 @@ app.get('/switchtoAdmin',(req,res)=>{
     res.redirect(`/home/${req.session.ID}`)
         }
     else
-        {
-            res.render('index');
-        }
+        res.redirect('/login')
 })
 app.get('/listusers/:id',(req,res)=>{
     if(req.session.isLogin)
@@ -624,9 +601,7 @@ app.get('/listusers/:id',(req,res)=>{
     })
         }
     else
-        {
-            res.render('index');
-        }
+       res.redirect('/login')
 })
 app.get('/listtags/:id',(req,res)=>{
     if(req.session.isLogin)
@@ -636,9 +611,7 @@ app.get('/listtags/:id',(req,res)=>{
     })
         }
     else
-        {
-            res.render('index');
-        }
+        res.redirect('/login')
 })
 app.get('/listcomms/:id',(req,res)=>{
     if(req.session.isLogin)
@@ -648,9 +621,7 @@ app.get('/listcomms/:id',(req,res)=>{
     })
         }
     else
-        {
-            res.render('index');
-        }
+       res.redirect('/login')
 })
 
 app.post('/add',function(req,res){
@@ -724,7 +695,7 @@ app.post('/mail',function(req,res){
 //      clientId:'354116386100-bgfhvd9n4fss1fck3vdo0gs7ot9aifus.apps.googleusercontent.com',
        type: "login",
         user: 'khyati15khanduja@gmail.com',
-      pass:''
+      pass:'Khyatikk1511'
 //        clientSecret: 'XXWFS_-G8GIZd_CJMBIcrdci',
 //        refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
 //        accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x'
@@ -747,9 +718,38 @@ app.post('/mail',function(req,res){
 });
 })
 
+app.post('/sendmail',function(req,res){
+    var transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+//      clientId:'354116386100-bgfhvd9n4fss1fck3vdo0gs7ot9aifus.apps.googleusercontent.com',
+       type: "login",
+        user: 'khyati15khanduja@gmail.com',
+      pass:'Khyatikk1511'
+//        clientSecret: 'XXWFS_-G8GIZd_CJMBIcrdci',
+//        refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
+//        accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x'
+  }
+});
+    var mailOptions = {
+  from: 'khyati15khanduja@gmail.com',
+  to: req.body.sendTo,
+  subject: req.body.subject,
+  html: req.body.matter
+};
+    transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+      res.send("Error")
+  } else {
+    console.log('Email sent: ' + info.response);
+      res.send("Mailed")
+  }
+});
+})
 app.post('/getuserlist',function(req,res){
 	if(!req.session.isLogin){
-		res.render('index',{})
+		res.redirect('/login')
 	}
 	else{
 		var dir=req.body.order[0].dir;
@@ -1053,7 +1053,7 @@ app.post('/getuserlist',function(req,res){
 
 app.post('/gettagslist',function(req,res){
 	if(!req.session.isLogin){
-		res.render('index',{})
+		res.redirect('/login')
 	}
 	else{
 		var dir=req.body.order[0].dir;
@@ -1137,7 +1137,7 @@ app.post('/gettagslist',function(req,res){
 });
 app.post('/getcommslist',function(req,res){
 	if(!req.session.isLogin){
-		res.render('index',{})
+		res.redirect('/login')
 	}
 	else{
 		var dir=req.body.order[0].dir;
@@ -1319,7 +1319,7 @@ app.get('/tags/:id',(req,res)=>{
         }
     else
         {
-            res.render('index');
+           res.redirect('/login')
         }
 })
 app.get('/createcomm/:id',function(req,res){
@@ -1331,7 +1331,7 @@ app.get('/createcomm/:id',function(req,res){
         }
     else
         {
-            res.render('index');
+            res.redirect('/login')
         }
 })
 
@@ -1344,7 +1344,7 @@ app.get('/commpanel/:id',(req,res)=>{
         }
     else
         {
-            res.render('index');
+           res.redirect('/login')
         }
 })
 app.get('/searchcomms/:id',(req,res)=>{
@@ -1356,7 +1356,7 @@ app.get('/searchcomms/:id',(req,res)=>{
         }
     else
         {
-            res.render('index');
+           res.redirect('/login')
         }
 })
 app.post('/deletetag',function(req,res){
@@ -1581,6 +1581,7 @@ console.log(req.session.passport);
 			req.session.toUser=0;
 			req.session.Email=data[0].Email;
 			req.session.Role=data[0].Role;
+			req.session.Status=data[0].Status;
 			console.log(data[0]._id);
 			if(data[0].Status=="Confirmed")
                      res.redirect(`/portal/${req.session.ID}`);

@@ -208,6 +208,9 @@ margin-top: 15px;
 	else if(user.toUser==1){
 		%> <% include partials/tempheader %> <%
 	}
+	else if(user.Status=="Pending"){
+		%> <% include partials/pendinguserheader %> <%
+	}
 	else{%><%include partials/headeruser %><%
 	}%>     
                
@@ -242,7 +245,7 @@ margin-top: 15px;
                <p><strong>Name : </strong></p>
                 <div class="content"><input id="name"  type="text"></div><br>
  `              <p><strong>DOB : </strong></p>
-                <div class="content"><input id="dob"  type="date"></div><br>
+                <div class="content"><input id="dob" type="text"></div><br>
                  <p><strong>Role : </strong></p>
                 <div class="content"><input id="role"  type="text"></div><br>
                  <p><strong>Gender : </strong></p>
@@ -301,7 +304,7 @@ document.getElementById("cancel").onclick=function(){
                                    if(path){
 									  								   path="../"+path;
 
-                                  document.getElementById("imagee").setAttribute("src",path);
+//                                  document.getElementById("imagee").setAttribute("src",path);
 								if(document.getElementById("image1"))
                                    document.getElementById("image1").setAttribute("src",path);
                                    }
@@ -309,7 +312,7 @@ document.getElementById("cancel").onclick=function(){
 									   {
 										 if(document.getElementById("image1"))
 										 document.getElementById("image1").setAttribute("src","../logo.jpg");
-										    document.getElementById("imagee").setAttribute("src","../logo.jpg");
+//										    document.getElementById("imagee").setAttribute("src","../logo.jpg");
 									   }
                                }
                 
@@ -364,9 +367,6 @@ document.getElementById("cancel").onclick=function(){
             }
             };
         }
-		 document.getElementById("home").onclick=function(){
-			 console.log("A");
-			 window.location.href=`/home/${currentuser}`;
-		 }   
+		  
     </script>
 </html>

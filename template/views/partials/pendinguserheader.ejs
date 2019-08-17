@@ -129,9 +129,6 @@ align-content:center;
          <body>    
          <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="#" id="home" class="btn"><i class="fas fa-home"></i>&nbsp; Home</a>
-        <a href="#" id="comms" class="btn"><i class="fas fa-users"></i> &nbsp;Communities</a>
-      <a href="#" id="pswd" class="btn"><i class="fas fa-lock"></i> &nbsp;Password</a>
     <a href="#" id="logout" data-toggle="modal" data-target="#exampleModal1" class="btn"><i class="fas fa-sign-out-alt"></i> &nbsp;LOGOUT</a>
 </div>
        <div id="head" style="width: 100%;height:60px">
@@ -171,21 +168,10 @@ function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
 
-document.getElementById("comms").onclick=function(){
-                         window.location.href=`/commpanel/${currentuser}`;
-}
-document.getElementById("imagee").onclick=function(){
-                         window.location.href=`/home/${currentuser}`;
-}
-document.getElementById("pswd").onclick=function(){
-                         window.location.href=`/changepassword/${currentuser}`;
-}
-document.getElementById("home").onclick=function(){
-			 window.location.href=`/home/${currentuser}`;
-		 }
+
 document.getElementById("no1").addEventListener('click',function(){
 		  		   window.location.href='';
-	  })
+})
 	  document.getElementById("yeslogout").addEventListener('click',function(){
                          window.location.href='/login';
 })
