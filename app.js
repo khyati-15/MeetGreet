@@ -1,3 +1,4 @@
+
 var express=require('express')
 var path=require('path')
 const multer = require('multer');
@@ -6,7 +7,7 @@ var ejs=require('ejs')
 var session = require('express-session');
 const fs=require('fs')
 const nodemailer = require("nodemailer");
- var passport=require('passport')
+var passport=require('passport')
 app.use(passport.initialize());
 app.use(passport.session());
 var GitHubStrategy = require('passport-github').Strategy;
@@ -45,6 +46,15 @@ var communitySchema=new mongoose.Schema({
     Description:String,
     Requested:[String],
     Members:[String],
+	Discussion:[{
+		Title:String,
+		Desc:String,
+		User:String,
+		Replies:[{
+			BY:String,
+			Text:String
+		}]
+	}],
     final : {
       contentType: String,
      path : String
@@ -230,7 +240,6 @@ app.get('/portal/:id',function(req,res){
 		res.redirect('/login')
 })
 
-
 app.get('/edit/:id',function(req,res){
 	if(req.session.isLogin){
 		res.render('edituser',{
@@ -250,7 +259,6 @@ app.get('/memberspage/:id/:user',function(req,res){
 	else
 		res.redirect('/login')
 })
-
 
 app.get('/managecommunity/:id/:user',function(req,res){
 	if(req.session.isLogin){
@@ -285,6 +293,16 @@ app.get('/viewprofile/:id/:user',function(req,res){
 app.get('/commportal/:id/:user',function(req,res){
 	if(req.session.isLogin){
 		res.render('commportal',{
+			user:req.session
+		})
+	}
+	else
+		res.redirect('/login')
+})
+
+app.get('/commdiscussion/:id/:user',function(req,res){
+	if(req.session.isLogin){
+		res.render('commdiscussion',{
 			user:req.session
 		})
 	}
@@ -388,7 +406,7 @@ function checkFileType(file, cb){
 
  app.post('/uploadphoto', upload.single('myImage'),(req, res) => {
      if(!req.file)
-         res.render('update1');
+       res.redirect(`/edit/${req.session.ID}`);
  else{
     var img = fs.readFileSync(req.file.path);
  var encode_image = img.toString('base64');
@@ -687,7 +705,6 @@ console.log(req.body)
         })
   })
 
-
 app.post('/mail',function(req,res){
     var transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -695,7 +712,7 @@ app.post('/mail',function(req,res){
 //      clientId:'354116386100-bgfhvd9n4fss1fck3vdo0gs7ot9aifus.apps.googleusercontent.com',
        type: "login",
         user: 'khyati15khanduja@gmail.com',
-      pass:'password'
+      pass:'Khyatikk1511'
 //        clientSecret: 'XXWFS_-G8GIZd_CJMBIcrdci',
 //        refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
 //        accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x'
@@ -1047,10 +1064,7 @@ app.post('/getuserlist',function(req,res){
         })
     }
   }
-});
-
-
-
+})
 app.post('/gettagslist',function(req,res){
 	if(!req.session.isLogin){
 		res.redirect('/login')
@@ -1218,7 +1232,7 @@ app.post('/getcommslist',function(req,res){
 				else
           {
 			  res.send({
-            "recordsTotal": count,
+		 "recordsTotal": count,
             "recordsFiltered": count,
             data
           });
@@ -1396,6 +1410,33 @@ app.post('/comms/joined', function (req, res) {
       res.send(err);
     })
 });
+
+app.post('/addNewDiscussion/:id',function(req,res){
+
+	community.findOneAndUpdate({
+		_id:req.params.id
+	},{
+		$push:{
+				Discussion:{
+					Title:req.body.Title,
+					Desc:req.body.Discussion,
+					User:req.body.By
+				}
+			}
+			},{safe: true, upsert: true},
+    function(err, doc) {
+        if(err){
+        console.log(err);
+            res.send(err)
+        }else{
+        //do stuff
+            res.redirect(`/commpanel/${req.session.ID}`);
+        }
+    }
+
+);
+})
+
 app.post('/AddCommunity', upload.single('community-'), function (req, res) {
   console.log(req.body);
   console.log(req.file);
@@ -1544,7 +1585,6 @@ app.post('/comms/requested', function (req, res) {
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
-
 
 passport.deserializeUser(function(user, done) {
   done(null, user);
@@ -1717,6 +1757,10 @@ app.post('/community/joinrequest', function (req, res) {
       res.send(err);
     })
 });
-
+app.post('/addreply/:disid/:commid',function(req,res){
+	comms.findOneAndUpdate({
+		
+	})
+})
 
 app.listen('3000');

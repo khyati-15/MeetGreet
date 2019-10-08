@@ -185,6 +185,14 @@ align-content:center;
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   <script>
+	   var currentuser=window.location.href.substring(window.location.href.lastIndexOf('/') + 1).replace("-"," ");
+	  var count=window.location.href.split("/");
+	  var path;
+	  for(var i=0;i<count.length;i++)
+		 {
+			 path+="../";
+		 }
+	  path+="logo.jpg";
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
 }
