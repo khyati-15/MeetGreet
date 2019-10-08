@@ -425,6 +425,7 @@ border-color:grey;
             };
 			 url = $(location).attr('href').split( '/' );
 			document.getElementById("edit").setAttribute("href",`/editcommunity/${url[url.length-2]}/${currentuser}`);
+			document.getElementById("comm-members-option-but").setAttribute("href",`/memberspage/${url[url.length-2]}/${currentuser}`);
 			var xhttp=new XMLHttpRequest();
 			xhttp.open("GET",`/getcommphoto/${url[url.length-2]}`);
 			xhttp.send();
@@ -607,7 +608,7 @@ border-color:grey;
             if (requests.status === 200) {
                 var results = (requests.responseText);
                 console.log(results);
-                location.reload();
+                window.location.href=`/managecommunity/${url[url.length-2]}/${currentuser}`;
             }
         });
     }
@@ -620,7 +621,7 @@ border-color:grey;
             if (requests.status === 200) {
                 var results = (requests.responseText);
                 console.log(results);
-                location.reload();
+              window.location.href=`/managecommunity/${url[url.length-2]}/${currentuser}`;
             }
         });
     }

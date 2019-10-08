@@ -2,37 +2,24 @@
   <html>
     <head>
        <style>
-/*
-		   .container{
-			   margin-left:20%;
-			   margin-right:10%;
-		   }
-*/
+
            h3{
                color:gray;
            }
     #image2
-{
+	{
     height:30px;
     width:30px;
 }
-		   #list{
-			   font-size:10px
+		   
+           textarea{
+               width:100%;
+           }
+		   
+		   #title{
+			   height:50px;
 		   }
-           .member
-           {
-               font-size:20px;
-               margin-left:300px;
-			   margin-top:100px;
-           }
-           input{
-               height:100px;
-               width:1000px;
-           }
-           #distitle
-           {
-               height:50px;
-           }
+           
     #insert{
 margin-left:400;
 font-size:30px;
@@ -77,13 +64,22 @@ border-color:grey;
         
 		.textbox
            {
-              margin :10px;  
-			           }
+			   height:50px;
+			   width:93%;
+		 }
            .head
            {
                background-color: lightgray;
                width:100%;
                text-align: center;
+               height:40px;
+               font-size: 25px;
+           }
+			 .head1
+           {
+               background-color:dodgerblue;
+			   color:white;
+               width:100%;
                height:40px;
                font-size: 25px;
            }
@@ -94,6 +90,13 @@ border-color:grey;
                text-align: center;
                height:35px;
                font-size: 20px;
+		}
+		.content1
+           {
+               background-color: lightsteelblue;
+               width:100%;
+               height:40px;
+               font-size: 25px;
 		}
 		div{
 			height:100px;
@@ -116,43 +119,8 @@ border-color:grey;
   top: 0;
 	margin-top:250px;
 		   }
-             .about
-           {
-               background-color: lightgray;
-               width:700px;
-               text-align: center;
-               align-content: center;
-               align-items: center;
-               justify-content: center;
-               height:40px;
-               font-size: 25px;
-           }
-           .desc
-           {
-               background-color: white;
-                text-align: center;
-               align-content: center;
-               align-items: center;
-               justify-content: center;
-               height:100px;
-               font-size: 25px;
-               width:700px;
-           }
-     .content1
-           {
-               background-color: white;
-               width:300px;
-               text-align: center;
-               align-content: center;
-               align-items: center;
-               justify-content: center;
-               height:80px;
-               font-size: 25px;
-           }
-           #boxes
-           {
-               width:1000px;
-           }
+           
+          
            #image
            {
                width:50px;
@@ -295,10 +263,7 @@ border-color:grey;
         <title>MeetGreet</title>
     
 </head>
-      
- 
-      
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
         
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
@@ -317,27 +282,20 @@ border-color:grey;
              <a id="insert" href=""></a>
                  <hr width="1000px" size="100px">
                  <div class="container">
-              <div class="row">
-              	<div class="col-12 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
-               <div class="textbox">
-				   <div class="head"><button id="rule" class="btn btn-primary" style="height:90%;text-align:center;margin-top:1%" onclick="joinbutpress()"></button></div>
-                <div class="content"><p id="members">Members</p></div>
-				</div>
-      	</div>
-      	<div class="col-12 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
-               <div class="textbox">
-                <div class="head"><p>About Community</p></div>
-                <div class="content"><p id="desc"></p></div>
-				</div>
-      	</div>
-       		<div class="col-12 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
-               <div class="textbox">
-                <div class="head"><p>Managers</p></div>
-                <div class="content"><li id="list"></li></div>
-				</div>
-      	</div>
-              </div>
-		</div>        
+                 	<div class="row">
+                 		<div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                 			<div class="head" background-color="light-gray">ADD A DISCUSSION</div>
+                 			<div class="content">
+                 				<textarea style="margin-top:10px;box-sizing : border-box;" type="text" id="title" placeholder="Discussion Title"></textarea>
+								<textarea style="margin-top:10px;box-sizing : border-box;" type="text" id="newdiscussion" placeholder="Start A Discussion"></textarea>
+                 				<button style="margin-top:10px;float:right" id="hit" class="btn btn-primary pull-right">ADD</button>
+                 			</div>
+						</div>
+                 	</div>
+                 </div>
+		 <br><br><br><br><br><br>
+		 <div class="container" id="previousdiscs">
+		</div>
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -345,11 +303,11 @@ border-color:grey;
        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script>
-     var curruser=[];
-	  var currentuser;
-		var url;
-				var result=new Object();
-        function    sendreq(){		
+    var curruser=[];
+	var currentuser;
+    var url;
+	var result=new Object();
+    function    sendreq(){		
 			currentuser=window.location.href.substring(window.location.href.lastIndexOf('/') + 1).replace("-"," ");
 			 var xhr=new XMLHttpRequest();
             xhr.open("GET",`/getphoto/${currentuser}`);
@@ -361,7 +319,7 @@ border-color:grey;
                                    console.log(path);
                                    if(path){
 									   path=path.slice(7,path.length);
-                                 	 	path="../../"+path;
+                                 	 	path="../../../"+path;
 //									   document.getElementById("commpic").setAttribute("src",path);
 //								   }
 							 document.getElementById("imagee").setAttribute("src",path);
@@ -371,8 +329,8 @@ border-color:grey;
 								   else
 									   {
 										 if(document.getElementById("image1"))
-										 document.getElementById("image1").setAttribute("src","../../logo.jpg");
-										    document.getElementById("imagee").setAttribute("src","../../logo.jpg");
+										 document.getElementById("image1").setAttribute("src","../../../logo.jpg");
+										    document.getElementById("imagee").setAttribute("src","../../../logo.jpg");
 									   }
                                }
             };
@@ -388,7 +346,7 @@ border-color:grey;
                                    console.log(path);
                                    if(path){
 									   path=path.slice(7,path.length);
-                                 	 	path="../../"+path;
+                                 	 	path="../../../"+path;
 									   document.getElementById("commpic").setAttribute("src",path);
 								   }
 			}
@@ -401,76 +359,118 @@ border-color:grey;
 			if(this.status==200){
 				result=JSON.parse(this.responseText);
 				console.log(result[0]);
-				document.getElementById("members").innerHTML+="("+(result[0].Members.length)+")";
 				document.getElementById("insert").innerHTML=result[0].Name;
-				if(result[0].Rule=="Direct")
-				document.getElementById("rule").innerHTML="JOIN";
-				else
-				document.getElementById("rule").innerHTML="ASK TO JOIN";
-				for(var i=0;i<result[0].Requested.length;i++){
-					if(result[0].Requested[i]==currentuser)
-					{
-						document.getElementById("rule").innerHTML="ASKED";
-						document.getElementById("rule").disabled="true";
+				if(result[0].Discussion)
+				for(var i=0;i<result[0].Discussion.length;i++){
+					
+					var div=document.createElement("div");
+					div.setAttribute("class","row");
+					div.setAttribute("id",result[0].Discussion[i]._id);
+					var coldiv=document.createElement("div");
+					coldiv.setAttribute("class","col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12");
+					var head=document.createElement("div");
+					head.setAttribute("class","head1");
+					head.innerHTML=result[0].Discussion[i].Title;
+					coldiv.appendChild(head);
+					var content=document.createElement("div");
+					content.setAttribute("class","content1");
+					content.innerHTML=result[0].Discussion[i].Desc;
+					coldiv.appendChild(content);
+					
+					if(result[0].Discussion[i].Replies){
+//						var lastreply=document.createElement("div");
+//						var newobj=new Object();
+//						var rep=result[0].Discussion[i].Replies;
+//						newobj.replyby=rep[rep.length-1].BY;
+//						newobj.text=rep[rep.length-1].Text;
+//						var newxhr=new XMLHttpRequest();
+//						newxhr.open("GET",`/findById/${newobj.replyby}`);
+//						newxhr.send();
+//						newxhr.onreadystatechange=function(){
+//						 	if(this.readyState==4    &&  this.status==200)
+//							{
+//								var res=JSON.parse(this.responseText);
+//								console.log(res);
+//							}
+//						};
+//						coldiv.appendChild(lastreply);
 					}
+					
+					var d=document.createElement("div");
+					d.setAttribute("class","textbox");
+					d.setAttribute("style","display:inline-block;vertical-align:top");
+					var p=document.createElement("div");
+					var reply=document.createElement("textarea");
+					reply.setAttribute("placeholder","Add A Reply");
+					p.setAttribute("style","display:inline-block;margin-top:7px");
+					p.innerHTML="&nbsp;<button id='addbut' class='btn btn-primary'>Add</button>";
+					d.appendChild(reply);
+					coldiv.appendChild(d);
+					coldiv.appendChild(p);
+					div.appendChild(coldiv);
+					console.log(div.id);
+					document.getElementById("previousdiscs").appendChild(div);
+					document.getElementById("previousdiscs").innerHTML+="<br><br><br><br>";
 				}
-				document.getElementById("desc").innerHTML=result[0].Description;
-				var li=document.createElement("h3");
-            var obj=new Object();
-                 obj.Email=result[0].Owner;
-                 var    xhro=new XMLHttpRequest();
-            document.getElementById("list").innerHTML='';
-                                 xhro.open("POST",'/findUser');
-                                 xhro.setRequestHeader("content-type","application/json");
-                                 xhro.send(JSON.stringify(obj));
-                                 xhro.onreadystatechange=function(){
-                                   if(this.readyState==4    &&  this.status==200)
-                                       {
-                                           var  owner1=(JSON.parse(this.responseText));
-                                           var  taga=document.createElement("a");
-										   taga.setAttribute("style","font-size:15px");
-										   taga.setAttribute('href',`/viewprofile/${owner1[0]._id}/${currentuser}`);
-                                           taga.setAttribute("id","own");
-                                           var  img=document.createElement("img");
-                                           img.setAttribute("src","../../logo.jpg");
-                                           img.setAttribute("id","image2");
-                                           if(owner1[0].final){
-                                           var  path=owner1[0].final.path;
-										   path=path.slice(7,path.length);
-                                      
-                                   			if(path){
-												path="../../"+path
-												img.setAttribute("src",path);
-											}
-                                           }
-                                                taga.appendChild(img);
-                                          taga.innerHTML+="&nbsp;&nbsp;"+owner1[0].Name;
-                                           li.appendChild(taga);
-                                           li.innerHTML+="<br>";
-										   console.log(li.innerHTML);
-                                                         document.getElementById("list").appendChild(li);
-                                        
-                                       }
-                                 };
 			}
 		}
 		}
-
-		function joinbutpress() {
-        var requests = new XMLHttpRequest();
-        requests.open('post', "/community/joinrequest");
-        requests.setRequestHeader("Content-Type", "Application/JSON")
-        requests.send(JSON.stringify({
-            "id": url[url.length-2],
-        }));
-        requests.addEventListener('load', function () {
-            if (requests.status === 200) {
-                var results = JSON.parse(requests.responseText);
-                console.log(results);
-                window.location.href=`/searchcomm/${currentuser}`;
-            }
-        });
-    }
+		
+    $(document).on("click","#addbut",function(){
+		var dis=$(this).parent().parent().parent();
+		console.log(dis[0].id);
+		var text=$(this).parent().parent();
+		if(text[0].children[2].firstChild.value=="")
+			alert("Replybox can't be empty");
+		else{
+		var replyy=new Object();
+		replyy.by=currentuser;
+		replyy.textt=text[0].children[2].firstChild.value;
+		var send=new XMLHttpRequest();
+			send.open("POST",`/addreply/${dis[0].id}/${url[url.length-2]}`);
+			send.setRequestHeader("content-type","application/json");
+			send.send(JSON.stringify(replyy));
+			send.onreadystatechange=function(){
+				if(this.readyState==4    &&  this.status==200){					
+					window.location.href=`/commdiscussion/${url[url.length-2]}/${currentuser}}`;
+				}
+			};
+		}
+	});
+		 
+	$(document).on("click","#hit",function(){
+		var title=document.getElementById("title").value;
+		var disc=document.getElementById("newdiscussion").value;
+		if(title=="" || disc=="")
+			alert("Fill Title and Discussion box");
+		else{
+			var a=0;
+			if(result[0].Discussion)
+			for(var i=0;i<result[0].Discussion.length;i++){
+				if(result[0].Discussion[i].Title==title){
+					console.log(result[0].Discussion[i]._id);
+					a=1;
+					alert("Title already taken");
+				}
+			}
+			if(a==0){
+			var obj=new Object();
+			obj.Title=title;
+			obj.Discussion=disc;
+			obj.By=currentuser;
+			var xhr=new XMLHttpRequest();
+			xhr.open("POST",`/addNewDiscussion/${url[url.length-2]}`);
+			xhr.setRequestHeader("content-type","application/json");
+			xhr.send(JSON.stringify(obj));
+			xhr.onreadystatechange=function(){
+				if(this.readyState==4    &&  this.status==200)
+				{
+					window.location.href=`/commdiscussion/${url[url.length-2]}/${currentuser}}`;
+				}
+			};
+		}
+		}
+	});
     </script>
    
 </html>

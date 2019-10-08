@@ -2,10 +2,7 @@
    <meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=yes">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<!--
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-               <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
--->
+
     <head>
 
 
@@ -201,18 +198,18 @@
 										console.log(path);
 
 					path="../"+path;
-                imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
+                imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +"/"+currentuser+
                     "'><img src='" + path + "' class='cpic'></a>";
 				}
 				else
-				 imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
+				 imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +"/"+currentuser+
                     "'><img src='" + "../community.jpg" + "' class='cpic'></a>";			
                 divhead.appendChild(imagediv);
 				 var contentdiv = document.createElement("div");
                 contentdiv.setAttribute("class", "community-list-content");
                 var code =
                     "<div class='col-sm-10 col-xs-7' style='padding-top:25px;padding-bottom:5px;overflow:hidden'><p style='margin:0'><a class='comnametxt' href='/commdiscussion/" +
-                    result[i]._id + "'>" + result[i].Name;
+                    result[i]._id +"/"+currentuser+ "'>" + result[i].Name;
 						console.log(result[i].Rule);
 						if(result[i].Rule=="Permission"){
 							code+="&nbsp;<a class='comnametxt' href='/managecommunity/"+result[i]._id+"/"+currentuser+"'> Requests("+result[i].Requested.length+")";
@@ -259,18 +256,18 @@
 							path=path.slice(7,path.length);
 							console.log(path);
 							path="../"+path;
-						imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
+						imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +"/"+currentuser+
 							"'><img src='" + path + "' class='cpic'></a>";
 						}
 						else
-						 imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
+						 imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +"/"+currentuser+
 							"'><img src='" + "../community.jpg" + "' class='cpic'></a>";			
 						divhead.appendChild(imagediv);
 						 var contentdiv = document.createElement("div");
 						contentdiv.setAttribute("class", "community-list-content");
 						var code =
 							"<div class='col-sm-10 col-xs-7' style='padding-top:25px;padding-bottom:5px;overflow:hidden'><p style='margin:0'><a class='comnametxt' href='/commdiscussion/" +
-							result[i]._id + "'>" + result[i].Name;						
+							result[i]._id + "/"+currentuser+"'>" + result[i].Name;						
 								code+="&nbsp;<a class='commemtxt' href='/memberspage/"+result[i]._id+"/"+currentuser+"'> Members("+result[i].Members.length+")</p>";
 								"</div>";
 						contentdiv.innerHTML = code;
@@ -304,18 +301,18 @@
 					var path=result[i].final.path;
 					path=path.slice(7,path.length);
 					path="../"+path;
-                imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
+                imagediv.innerHTML = "<a href='/commportal/" + result[i]._id +"/"+currentuser+
                     "'><img src='" + path + "' class='cpic'></a>";
 				}
 				else
-				 imagediv.innerHTML = "<a href='/commdiscussion/" + result[i]._id +
+				 imagediv.innerHTML = "<a href='/commportal/" + result[i]._id +"/"+currentuser+
                     "'><img src='" + "../community.jpg" + "' class='cpic'></a>";			
                 divhead.appendChild(imagediv);
 				 var contentdiv = document.createElement("div");
                 contentdiv.setAttribute("class", "community-list-content");
                 var code =
-                    "<div class='col-sm-10 col-xs-7' style='padding-top:25px;padding-bottom:5px;overflow:hidden'><p style='margin:0'><button class='btn btn-danger' disabled>Pending</button>&nbsp;<a class='comnametxt' href='/commdiscussion/" +
-                    result[i]._id + "'>" + result[i].Name;						
+                    "<div class='col-sm-10 col-xs-7' style='padding-top:25px;padding-bottom:5px;overflow:hidden'><p style='margin:0'><button class='btn btn-danger' disabled>Pending</button>&nbsp;<a class='comnametxt' href='/commportal/" +
+                    result[i]._id +"/"+currentuser+ "'>" + result[i].Name;						
 						code+="&nbsp;</a>"+" Members("+result[i].Members.length+")</p>";
 						"</div>";
                 contentdiv.innerHTML = code;
